@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Muhammad Shahidan | IT Executive</title>
+  <link rel="preload" href="bg.jpg" as="image">
   <meta name="description" content="Muhammad Shahidan Bin Taib - IT Executive with experience in Microsoft 365, IT operations, infrastructure and Power Apps.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <meta property="og:title" content="Muhammad Shahidan | IT Executive">
   <meta property="og:description" content="IT Executive with experience in Microsoft 365, IT operations, infrastructure and Power Apps.">
-  <meta property="og:image" content="https://idanluffyy.github.io/profile.jpg">
-  <meta property="og:url" content="https://idanluffyy.github.io">
+  <meta property="og:image" content="https://idanluffyy.github.io/shahidan/profile.jpg">
+  <meta property="og:url" content="https://idanluffyy.github.io/shahidan/">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#0f172a">
   <link rel="icon" href="profile.jpg">
@@ -18,11 +19,12 @@
 
 <body>
   <div id="loader">
-    <div class="logo-mark"> MS. </div>
+    <div class="logo-mark"><img src="logo.png" alt="Logo"></div>
     <div class="type-wrap"><span class="type-text">SHAHIDAN<b>.</b></span></div>
   </div>
   <div id="progress"></div>
   <nav>
+    <button id="menu-btn" aria-label="Menu">☰</button>
     <a href="#about"><i class="fa-solid fa-user"></i> About</a>
     <a href="#experience"><i class="fa-solid fa-briefcase"></i> Experience</a>
     <a href="#projects"><i class="fa-solid fa-diagram-project"></i> Projects</a>
@@ -176,6 +178,34 @@
       </div>
     </section>
 
+    <section id="levels">
+      <h2><i class="fa-solid fa-chart-simple"></i> Skill Levels</h2>
+      <div class="bar">
+        <div class="bar-top"><span>IT Support and Troubleshooting</span><b>90%</b></div>
+        <div class="bar-track"><div class="bar-fill" style="--w:90%"></div></div>
+      </div>
+      <div class="bar">
+        <div class="bar-top"><span>Microsoft 365 Administration</span><b>85%</b></div>
+        <div class="bar-track"><div class="bar-fill" style="--w:85%"></div></div>
+      </div>
+      <div class="bar">
+        <div class="bar-top"><span>Active Directory</span><b>80%</b></div>
+        <div class="bar-track"><div class="bar-fill" style="--w:80%"></div></div>
+      </div>
+      <div class="bar">
+        <div class="bar-top"><span>Power Apps and Power Automate</span><b>75%</b></div>
+        <div class="bar-track"><div class="bar-fill" style="--w:75%"></div></div>
+      </div>
+      <div class="bar">
+        <div class="bar-top"><span>Network Troubleshooting</span><b>70%</b></div>
+        <div class="bar-track"><div class="bar-fill" style="--w:70%"></div></div>
+      </div>
+      <div class="bar">
+        <div class="bar-top"><span>Cloud (Amazon S3, Cloudflare)</span><b>60%</b></div>
+        <div class="bar-track"><div class="bar-fill" style="--w:60%"></div></div>
+      </div>
+    </section>
+
     <section>
       <h2><i class="fa-solid fa-toolbox"></i> Tools I Use</h2>
       <div class="tags">
@@ -261,9 +291,17 @@
     <section id="contact">
       <h2><i class="fa-solid fa-envelope"></i> Contact</h2>
       <p>Let's connect and discuss technology, IT operations, and opportunities for professional collaboration.</p>
+      <p class="small-note">References available on request.</p>
       <a href="mailto:myshahidan@gmail.com" class="btn-dark"><i class="fa-solid fa-envelope"></i> Email Me</a>
       <a href="#" id="copy" class="btn-dark"><i class="fa-regular fa-copy"></i> Copy Email</a>
       <a href="https://www.linkedin.com/in/muhdshahidan" class="btn-dark"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+      <form class="contact-form" action="https://formspree.io/f/xnppoyje" method="POST">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Your email" required>
+        <textarea name="message" rows="4" placeholder="Your message" required></textarea>
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <button type="submit" class="btn-dark"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+      </form>
     </section>
   </main>
 
@@ -275,6 +313,16 @@
   </footer>
 
   <div id="glow"></div>
+  <div id="modal">
+    <div class="modal-box">
+      <button id="modal-close" aria-label="Close">✕</button>
+      <img id="modal-img" alt="">
+      <h3 id="modal-title"></h3>
+      <p id="modal-text"></p>
+      <ul id="modal-list"></ul>
+      <div class="tags" id="modal-tags"></div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

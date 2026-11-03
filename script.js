@@ -304,3 +304,268 @@ document.querySelectorAll(".bld").forEach((b) => {
 
   document.querySelectorAll("main section").forEach((s) => seen.observe(s));
 })();
+
+const nav = document.querySelector("nav");
+const menuBtn = document.getElementById("menu-btn");
+
+menuBtn.addEventListener("click", () => {
+  nav.classList.toggle("open");
+  menuBtn.textContent = nav.classList.contains("open") ? "✕" : "☰";
+});
+
+document.querySelectorAll("nav a").forEach((a) => {
+  a.addEventListener("click", () => {
+    nav.classList.remove("open");
+    menuBtn.textContent = "☰";
+  });
+});
+
+// ---------- Project pop-up ----------
+const projectInfo = {
+  "IT Asset Management System": {
+    text: "A central system to manage company IT assets from start to finish.",
+    points: [
+      "Tracks inventory, assignment and returns",
+      "Tracks maintenance and warranty",
+      "Interactive dashboards and easy forms for asset management and reporting"
+    ],
+    tools: ["Power Apps", "Microsoft Lists", "Power Automate"]
+  },
+  "O&M Vehicle Management System": {
+    text: "A vehicle system with one side for users and one side for admins.",
+    points: [
+      "User forms for vehicle requests",
+      "Admin screens to manage vehicles, approvals and records",
+      "Automatic notifications and approval flows"
+    ],
+    tools: ["Power Apps", "Microsoft Lists", "Power Automate"]
+  }
+};
+
+const modal = document.getElementById("modal");
+const modalImg = document.getElementById("modal-img");
+
+function closeModal() {
+  modal.classList.remove("open");
+}
+
+document.querySelectorAll("#projects .card").forEach((card) => {
+  card.addEventListener("click", (e) => {
+    if (e.target.classList.contains("shot") && document.getElementById("viewer")) return;
+
+    const title = card.querySelector("h3").textContent;
+    const info = projectInfo[title];
+    if (!info) return;
+
+    document.getElementById("modal-title").textContent = title;
+    document.getElementById("modal-text").textContent = info.text;
+
+    const list = document.getElementById("modal-list");
+    list.innerHTML = "";
+    info.points.forEach((p) => {
+      const li = document.createElement("li");
+      li.textContent = p;
+      list.appendChild(li);
+    });
+
+    const tags = document.getElementById("modal-tags");
+    tags.innerHTML = "";
+    info.tools.forEach((t) => {
+      const s = document.createElement("span");
+      s.textContent = t;
+      tags.appendChild(s);
+    });
+
+    const shot = card.querySelector(".shot");
+    if (shot) {
+      modalImg.src = shot.src;
+      modalImg.style.display = "block";
+    } else {
+      modalImg.style.display = "none";
+    }
+    modalImg.onerror = () => (modalImg.style.display = "none");
+
+    modal.classList.add("open");
+  });
+});
+
+document.getElementById("modal-close").addEventListener("click", closeModal);
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) closeModal();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
+});
+
+// Load logos and screenshots only when they come into view
+document.querySelectorAll("img.shot, img.logo").forEach((img) => {
+  img.loading = "lazy";
+});
+
+// ---------- Card tilt (laptop only) ----------
+if (window.matchMedia("(hover: hover)").matches) {
+  document.querySelectorAll(".card").forEach((card) => {
+    card.addEventListener("mousemove", (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform =
+        "perspective(700px) rotateX(" + -y * 10 + "deg) rotateY(" + x * 10 + "deg) translateY(-6px)";
+    });
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "";
+    });
+  });
+}
+
+// ---------- Click sparkles ----------
+document.addEventListener("click", (e) => {
+  for (let i = 0; i < 8; i++) {
+    const s = document.createElement("span");
+    s.className = "spark";
+    const angle = (Math.PI * 2 * i) / 8;
+    const dist = 30 + Math.random() * 30;
+    s.style.left = e.clientX + "px";
+    s.style.top = e.clientY + "px";
+    s.style.setProperty("--dx", Math.cos(angle) * dist + "px");
+    s.style.setProperty("--dy", Math.sin(angle) * dist + "px");
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 700);
+  }
+});
+
+// ---------- Skill bars fill when visible ----------
+const levels = document.getElementById("levels");
+new IntersectionObserver((entries, obs) => {
+  entries.forEach((en) => {
+    if (en.isIntersecting) {
+      levels.classList.add("go");
+      obs.disconnect();
+    }
+  });
+}, { threshold: 0.3 }).observe(levels);
+
+// ---------- Language button (EN / BM) ----------
+(function () {
+  const ms = {
+    "About": "Tentang",
+    "Experience": "Pengalaman",
+    "Projects": "Projek",
+    "Skills": "Kemahiran",
+    "Contact": "Hubungi",
+
+    "FROM ISSUES.": "DARI MASALAH.",
+    "TO SOLUTIONS.": "KE PENYELESAIAN.",
+    "Open to opportunities": "Terbuka untuk peluang",
+    "Download Resume": "Muat Turun Resume",
+
+    "Years in IT": "Tahun dalam IT",
+    "Companies": "Syarikat",
+    "Power Apps Systems": "Sistem Power Apps",
+    "Certification": "Sijil",
+
+    "NOT JUST SUPPORT.": "BUKAN SEKADAR SOKONGAN.",
+    "KEEPING EVERYTHING RUNNING.": "MEMASTIKAN SEMUANYA BERJALAN.",
+    "LET'S BUILD": "MARI BINA",
+    "SOMETHING RELIABLE.": "SESUATU YANG BOLEH DIPERCAYAI.",
+
+    "About Me": "Tentang Saya",
+    "Professional Experience": "Pengalaman Kerja",
+    "Technical Expertise": "Kepakaran Teknikal",
+    "Skill Levels": "Tahap Kemahiran",
+    "Tools I Use": "Alatan Yang Digunakan",
+    "Education": "Pendidikan",
+    "Certifications": "Sijil",
+    "Activities": "Aktiviti",
+
+    "I'm an IT professional with hands-on experience in IT operations, Microsoft 365 administration, end-user support, and IT infrastructure troubleshooting.":
+      "Saya seorang profesional IT yang berpengalaman dalam operasi IT, pentadbiran Microsoft 365, sokongan pengguna akhir, dan penyelesaian masalah infrastruktur IT.",
+    "My work involves managing Microsoft 365 services, resolving technical issues, supporting business-critical systems, and maintaining a reliable and secure IT environment. I take a practical, problem-solving approach to technology, with a focus on system reliability, operational efficiency, and user experience.":
+      "Kerja saya melibatkan pengurusan perkhidmatan Microsoft 365, menyelesaikan isu teknikal, menyokong sistem kritikal perniagaan, serta menjaga persekitaran IT yang boleh dipercayai dan selamat. Saya mengamalkan pendekatan praktikal dan berfokus kepada penyelesaian masalah, dengan penekanan pada kebolehpercayaan sistem, kecekapan operasi dan pengalaman pengguna.",
+    "I'm continuously developing my technical expertise in cloud technologies, infrastructure management, and cybersecurity.":
+      "Saya terus memperkembangkan kepakaran teknikal saya dalam teknologi awan, pengurusan infrastruktur dan keselamatan siber.",
+
+    "Let's connect and discuss technology, IT operations, and opportunities for professional collaboration.":
+      "Jom berhubung dan berbincang tentang teknologi, operasi IT dan peluang kerjasama profesional.",
+    "Email Me": "E-mel Saya",
+    "Copy Email": "Salin E-mel",
+    "Send Message": "Hantar Mesej",
+    "References available on request.": "Rujukan boleh diberikan atas permintaan."
+  };
+
+  const placeholders = {
+    "Your name": "Nama anda",
+    "Your email": "E-mel anda",
+    "Your message": "Mesej anda"
+  };
+
+  const norm = (s) => s.replace(/\u2019/g, "'").replace(/\s+/g, " ").trim();
+  const map = {};
+  Object.keys(ms).forEach((k) => (map[norm(k)] = ms[k]));
+
+  const nodes = [];
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) {
+    const n = walker.currentNode;
+    if (["SCRIPT", "STYLE"].includes(n.parentNode.nodeName)) continue;
+    const key = norm(n.nodeValue);
+    if (map[key]) nodes.push({ node: n, en: n.nodeValue, ms: map[key] });
+  }
+
+  const fields = [...document.querySelectorAll("[placeholder]")]
+    .map((el) => ({ el, en: el.placeholder, ms: placeholders[el.placeholder] }))
+    .filter((f) => f.ms);
+
+  const btn = document.createElement("button");
+  btn.id = "lang-btn";
+  document.body.appendChild(btn);
+
+  function apply(lang) {
+    nodes.forEach((x) => {
+      if (lang === "ms") {
+        const lead = x.en.match(/^\s*/)[0];
+        const trail = x.en.match(/\s*$/)[0];
+        x.node.nodeValue = lead + x.ms + trail;
+      } else {
+        x.node.nodeValue = x.en;
+      }
+    });
+    fields.forEach((f) => (f.el.placeholder = lang === "ms" ? f.ms : f.en));
+    document.documentElement.lang = lang;
+    btn.textContent = lang === "ms" ? "🌐 EN" : "🌐 BM";
+  }
+
+  let lang = "en";
+  try { lang = localStorage.getItem("lang") || "en"; } catch (e) {}
+
+  btn.addEventListener("click", () => {
+    lang = lang === "ms" ? "en" : "ms";
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+    apply(lang);
+  });
+
+  apply(lang);
+})();
+
+// ---------- Dark / Light button ----------
+(function () {
+  const btn = document.createElement("button");
+  btn.id = "theme-btn";
+  document.body.appendChild(btn);
+
+  let theme = "dark";
+  try { theme = localStorage.getItem("theme") || "dark"; } catch (e) {}
+
+  function apply() {
+    document.documentElement.dataset.theme = theme;
+    btn.textContent = theme === "light" ? "🌙 Dark" : "☀️ Light";
+  }
+
+  btn.addEventListener("click", () => {
+    theme = theme === "light" ? "dark" : "light";
+    try { localStorage.setItem("theme", theme); } catch (e) {}
+    apply();
+  });
+
+  apply();
+})();
