@@ -1481,3 +1481,18 @@ html[data-theme="light"] .contact-form textarea {
   opacity: 0.75;
   font-style: italic;
 }
+
+/* ---------- Batch 57: logo in the same line ---------- */
+#experience .job { display: block; }
+
+.job-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+.job-head .logo { flex-shrink: 0; }
+.job-head h3,
+.job-head p { margin: 0; }
+
+#experience .points { margin-left: 4px; }
